@@ -37,3 +37,4 @@ jobs:
             -e BRANCH=master \
             -v /opt/lab_sec_audit/sast:/opt/sources \
             mixeway/scanner:latest
+        continue-on-error: false
