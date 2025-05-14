@@ -6,26 +6,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+
       - name: Prepare variables
         id: vars
         shell: bash
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-output name=sha_short::$(git rev-parse HEAD)"
-     - name: Prepare Mixeway docker image
-       run: |
-         docker pull mixeway/scanner:latest
-     - name: Run Scan
-       run: |
-         docker run \
-         -e OSS_USERNAME=01159124@pw.edu.pl \
-         -e OSS_KEY=5c6e847bfff698fcd3630b74b569122db495f456 \
-         -e MIXEWAY_URL=https://hub.mixeway.io \
-         -e MIXEWAY_KEY=e65111c9-a7ad-4792-a324-2201ec3301bd \
-         -e MIXEWAY_PROJECT_ID=175 \
-         -e MODE=STANDALONE \
-         -e MIXEWAY_PROJECT_NAME=adamzientek_lab_secure_app \
-         -e COMMIT_ID=test2 \
-         -e BRANCH=master \
-         -v /opt/lab_sec_audit/sast:/opt/sources \
-         mixeway/scanner:latest
+
+      - name: Prepare Mixeway docker image
+        run: |
+          docker pull mixeway/scanner:latest
+
+      - name: Run Scan
+        run: |
+          docker run \
+            -e OSS_USERNAME=01159124@pw.edu.pl \
+            -e OSS_KEY=5c6e847bfff698fcd3630b74b569122db495f456 \
+            -e MIXEWAY_URL=https://hub.mixeway.io \
+            -e MIXEWAY_KEY=e65111c9-a7ad-4792-a324-2201ec3301bd \
+            -e MIXEWAY_PROJECT_ID=175 \
+            -e MODE=STANDALONE \
+            -e MIXEWAY_PROJECT_NAME=adamzientek_lab_secure_app \
+            -e COMMIT_ID=test2 \
+            -e BRANCH=master \
+            -v /opt/lab_sec_audit/sast:/opt/sources \
+            mixeway/scanner:latest
